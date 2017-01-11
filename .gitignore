@@ -1,1 +1,17 @@
-apidocs/
+node_modules
+.DS_Store
+*.DS_Store
+unity/Library
+unity/ProjectSettings
+unity/Temp
+unity/bin
+unity/Assets/Test
+unity/Assets/Materials
+unity/Assets/Models
+unity/Assets/SkinnedMeshes
+unity/Assets/Standard Assets
+unity/Assets/Vehicles
+unity/Assets/*.unity
+unity/Assets/AutoRotate.js
+unity/Assets/*.meta
+

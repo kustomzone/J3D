@@ -1,65 +1,92 @@
-## J3D
+# J3D
+================
 
-J3D is a WebGL based 3D engine. I use it for my personal experiments and demos. It's a playground rather than a production environment. It consists of a Javascript rendering engine and a C#/Unity3d scene exporter.
+## Unity3d to Three.js exporter
 
-If you would like to use it in your projects and experiments or contribute you are more than welcome! J3D currently does not have any kind of documentation beyond the code itself and a few tutorials listed below. Please report bugs in the issues section - I'll do my best to fix them.
+A utility to export static [Unity3d](http://unity3d.com/) scenes to [Three.js](https://github.com/mrdoob/three.js)
 
-Most of the demos should work work in all WebGL enabled browsers, including [Chrome](http://www.google.com/chrome/), [Firefox](http://www.mozilla.com/en-US/firefox/), [Opera 12 Alpha](http://www.opera.com/browser/next/) and Safari (with WebGL enabled) on desktop. Some demos only run in alpha/nightly builds of selected browsers. If this is the case the supported browsers are specified on the demo's page. Some demos run (poorly) in [Firefox on Android](http://www.mozilla.com/en-US/m/beta).
+### Usage
 
+Drop the contents of the `unity/Editor` folder in your Unity project `Assets` folder. A new option should appear in the top menu caled J3D. 
 
-J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact me via email at bartek(a)everyday3d.com or on Twitter [@bartekd](http://twitter.com/bartekd)
+When you have your scene ready, select all objects (or those you want to export) and select J3D > Export. A dialog will appear with some settings (docs for this coming soon). 
 
-## Tutorials
+When you hit Export, it will create two files:
 
-[How to create a cube](https://github.com/drojdjou/J3D/wiki/How-to-create-a-cube)
+- `filenameScene.json` which contains the scene graph, materials and all the meta info
+- `filename.json` which contains all geomatry data
 
-[Unity exporter tutorial](https://github.com/drojdjou/J3D/wiki/Unity-exporter-tutorial)
+On the three JS side, once you have your renderer and scene setup, do:
 
-[Shaders tutorial in .net magazine](http://www.netmagazine.com/tutorials/create-amazing-webgl-effects-shaders)
+```
+J3D.Loader.loadJSON("model/filename.json", function(jsmeshes) {
+    J3D.Loader.loadJSON("model/filenameScene.json", function(jsscene) {
+        J3D.Loader.parseJSONScene(renderer, scene, jsscene, jsmeshes);
+    });
+});
+```
 
-## Demos & experiments
+If you had objects in your Unity3d scene that are named `camera` or `cube`, you can find them in Three.js like this:
 
-[![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
-(http://www.everyday3d.com/j3d/demo/000_HelloCube.html)
-[![Lights](http://www.everyday3d.com/j3d/thumbs/002_lights.jpg)]
-(http://www.everyday3d.com/j3d/demo/001_Lights.html)
-[![Scene exported from Unity3d](http://www.everyday3d.com/j3d/thumbs/003_scene.jpg)]
-(http://www.everyday3d.com/j3d/demo/002_Scene.html)
-[![Cubemap / Reflective material / Skybox](http://www.everyday3d.com/j3d/thumbs/004_skybox.jpg)]
-(http://www.everyday3d.com/j3d/demo/003_Cubemap.html)
-[![Glass / Refraction, reflection, fresnel, chromatic dispersion](http://www.everyday3d.com/j3d/thumbs/005_glass.jpg)]
-(http://www.everyday3d.com/j3d/demo/004_Glass.html)
-[![1.000.000 static particles (or more :)](http://www.everyday3d.com/j3d/thumbs/006_particles.jpg)]
-(http://www.everyday3d.com/j3d/demo/005_Particles.html)
-[![Particle stream](http://www.everyday3d.com/j3d/thumbs/007_stream.jpg)]
-(http://www.everyday3d.com/j3d/demo/006_Particle_animation.html)
-[![Texture tile and offset](http://www.everyday3d.com/j3d/thumbs/008_tileoffset.jpg)]
-(http://www.everyday3d.com/j3d/demo/007_TileAndOffset.html)
-[![Lightmapped scene](http://www.everyday3d.com/j3d/thumbs/009_lightmap.jpg)]
-(http://www.everyday3d.com/j3d/demo/008_Lightmap.html)
-[![Basic filter](http://www.everyday3d.com/j3d/thumbs/010_basicfilter.jpg)]
-(http://www.everyday3d.com/j3d/demo/009_BasicFilter.html)
-[![Toon shading](http://www.everyday3d.com/j3d/thumbs/011_toon.jpg)]
-(http://www.everyday3d.com/j3d/demo/010_ToonShading.html)
-[![Plasma Effect](http://www.everyday3d.com/j3d/thumbs/012_plasma.jpg)]
-(http://www.everyday3d.com/j3d/demo/011_Plasma.html)
-[![Particle Rain](http://www.everyday3d.com/j3d/thumbs/013_rain.jpg)]
-(http://www.everyday3d.com/j3d/demo/012_ParticleRain.html)
-[![Paper](http://www.everyday3d.com/j3d/thumbs/014_paper.jpg)]
-(http://www.everyday3d.com/j3d/demo/013_Paper.html)
-[![Head](http://www.everyday3d.com/j3d/thumbs/015_head.jpg)]
-(http://www.everyday3d.com/j3d/demo/014_Head.html)
-[![Persistence](http://www.everyday3d.com/j3d/thumbs/016_persistence.jpg)]
-(http://www.everyday3d.com/j3d/demo/015_Persistence.html)
-[![Blur](http://www.everyday3d.com/j3d/thumbs/017_blur.jpg)]
-(http://www.everyday3d.com/j3d/demo/016_BlurFilter.html)
-[![Scene management](http://www.everyday3d.com/j3d/thumbs/018_sceneman.jpg)]
-(http://www.everyday3d.com/j3d/demo/017_SceneManagement.html)
-[![Globe](http://www.everyday3d.com/j3d/thumbs/019_sphere.png)]
-(http://www.everyday3d.com/j3d/demo/018_Sphere.html)
-[![Terrain shader](http://www.everyday3d.com/j3d/thumbs/020_terrain.jpg)]
-(http://www.everyday3d.com/j3d/demo/019_Terrain.html)
-[![Webcam texture (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/023_webrtc.jpg)]
-(http://www.everyday3d.com/j3d/demo/022_Webcam.html)
-[![Webcam particles (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/024_webcamParticles.jpg)]
-(http://www.everyday3d.com/j3d/demo/023_Webcam_Particles.html)
+```
+var cube = scene.getObjectByName('cube', true);
+var camera = scene.getObjectByName('camera', true);
+```
+
+Currently the exporter makes all names lowercase (ex. `RedCube` becomes `redcube`) and replaces all spaces with underscore (`red cube` becomes `red_cube`).
+
+### What version of Unity and Three has this been tested on?
+
+- Unity 4.5.3f3 (it works with the free version)
+- Three.js r68
+
+### What it does export now?
+
+- transforms hierarchy
+- mesh vertices and faces
+- a couple of basic materials (see below)
+- ambient light
+- perspective camera
+- skips GameObjects that are disabled in the editor
+
+### What it will export soon?
+
+- textures
+- lights
+- uv (multiple channels)
+- lightmaps
+- more materials
+- any camera type, multiple cameras
+
+### What it could export later on?
+
+- animations
+- bones
+
+### What it should probably not export?
+
+- scripts
+- shaders (*)
+
+My idea of a way better way to deal with shaders is to map existing Unity Cg shaders to Three.js GLSL shaders.
+
+### What format it uses?
+
+For now it uses a custom JSON format I used for the J3D webgl engine (you can still find it in this repo in the `legacy` branch). It exports two different files, one containing the geometry info (vertices, normals etc...) and the other everything else (hierachy, transforms, material).
+
+The `J3DLoader.js` class takes care of loading and parsing the scene, so the format doesn't really matter from the end user point of view, but the idea is to bring the format closer to [Object Scene format spec](https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4).
+
+### Materials mapping
+
+- `VertexLit` > `THREE.MeshLambertMaterial`
+- `Diffuse/Specular` > `THREE.MeshPhongMaterial`
+
+### Known issues
+
+It doesn't cope well with multiple GameObjects having the same name - even if they are in different places in the hierarchy.
+
+Keep in mind that textures are not supported yet.
+
+### Contributing
+
+Ping me [@bartekd](https://twitter.com/bartekd)
